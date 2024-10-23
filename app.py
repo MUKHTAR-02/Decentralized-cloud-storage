@@ -95,3 +95,6 @@ def get_metadata():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500  # Return error message on exception
+
+if __name__ == '__main__':
+    app.run(debug=True)
