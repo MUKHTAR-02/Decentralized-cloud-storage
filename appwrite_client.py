@@ -20,6 +20,7 @@ def signup(email, password):
         return user
     except Exception as e:
         print(f"Signup failed: {e}")
+        return None  # Return None for failed signup
 
 def login(email, password):
     """Log in an existing user."""
@@ -28,20 +29,34 @@ def login(email, password):
         return session
     except Exception as e:
         print(f"Login failed: {e}")
+        return None  # Return None for failed login
 
 def upload_chunk(chunk_path):
-    """Upload a file chunk to Appwrite."""
+    """Upload a file chunk to Appwrite and return the file ID."""
     try:
         with open(chunk_path, 'rb') as file:
-            result = storage.create_file(file=file, read=['*'], write=['*'])
-            return result
+            # Create a unique file ID, you can also use a UUID or another method
+            file_name = chunk_path.split("/")[-1]  # Extract the filename
+            # Use the filename as a unique ID or generate a UUID if needed
+            result = storage.create_file(file=file, read=['*'], write=['*'], file_id=file_name)
+            return result['$id']  # Return the file ID
     except Exception as e:
         print(f"Upload failed: {e}")
+        return None  # Return None for failed upload
 
 def download_chunk(file_id):
     """Download a file chunk from Appwrite using its ID."""
     try:
-        result = storage.get_file(file_id)
-        return result
+        # Fetch the file metadata
+        file_info = storage.get_file(file_id)
+        
+        # Fetch the file content
+        file_download = storage.get_file_download(file_id)
+        
+        return {
+            'file_info': file_info,  # Contains metadata (name, size, etc.)
+            'file_download': file_download  # Actual file content (binary)
+        }
     except Exception as e:
         print(f"Download failed: {e}")
+        return None  # Return None if the download fails

@@ -3,20 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Decentralized Cloud Storage</title>
+    <title>File Upload</title>
 </head>
 <body>
-    <h1>Welcome to Decentralized Cloud Storage</h1>
-    <h2>Upload a File</h2>
+    <h1>File Upload</h1>
+
+    <!-- Upload File Form -->
     <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" required>
+        <label for="file">Choose file:</label>
+        <input type="file" name="file" id="file" required>
         <button type="submit">Upload</button>
     </form>
-    
-    <h2>Download a File</h2>
+
+    <hr>
+
+    <!-- Download File Form -->
+    <h1>Download File</h1>
     <form action="/download" method="get">
-        <input type="text" name="file_id" placeholder="Enter file ID" required>
+        <label for="file_id_download">File ID:</label>
+        <input type="text" name="file_id" id="file_id_download" required>
         <button type="submit">Download</button>
     </form>
+
+    <hr>
+
+    <!-- Get Metadata Form -->
+    <h1>Get Metadata</h1>
+    <form action="/get_metadata" method="get">
+        <label for="file_id_metadata">File ID:</label>
+        <input type="text" name="file_id" id="file_id_metadata" required>
+        <button type="submit">Get Metadata</button>
+    </form>
+
+    <hr>
+
+    <!-- Result Section -->
+    <div id="result"></div>
+
+    <script>
+        // Optional: Handle result display for Ajax requests if needed
+    </script>
 </body>
 </html>
